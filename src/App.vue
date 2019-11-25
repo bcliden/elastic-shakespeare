@@ -1,11 +1,8 @@
 <template>
-<v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
+  <v-app id>
+    <v-navigation-drawer v-model="drawer" app>
       <v-list dense>
-        <v-list-item link>
+        <v-list-item exact link to="/">
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -13,90 +10,89 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/about">
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Contact</v-list-item-title>
+            <v-list-item-title>About</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+                <v-list-item link to="/speakers">
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Speakers</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+                <v-list-item link to="/plays">
+          <v-list-item-action>
+            <v-icon>mdi-book-open-page-variant</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Plays</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      color="indigo"
-      dark
-    >
+    <v-app-bar app color="indigo" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Application</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col class="text-center">
-            <v-tooltip left>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  :href="source"
-                  icon
-                  large
-                  target="_blank"
-                  v-on="on"
-                >
-                  <v-icon large>mdi-code-tags</v-icon>
-                </v-btn>
-              </template>
-              <span>Source</span>
-            </v-tooltip>
-
-            <v-tooltip right>
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  icon
-                  large
-                  href="https://codepen.io/johnjleider/pen/zgxeLQ"
-                  target="_blank"
-                  v-on="on"
-                >
-                  <v-icon large>mdi-codepen</v-icon>
-                </v-btn>
-              </template>
-              <span>Codepen</span>
-            </v-tooltip>
-          </v-col>
-        </v-row>
+      <v-container class="fill-height align-start">
+        <v-scroll-x-transition mode="out-in">
+        <router-view align="start"/>
+        </v-scroll-x-transition>
       </v-container>
     </v-content>
-    <v-footer
-      color="indigo"
-      app
-    >
+
+    <!-- <v-container>
+      <v-scroll-x-transition>
+      <router-view />
+
+      </v-scroll-x-transition>
+    </v-container> -->
+
+    <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-
 export default {
   props: {
     source: String
   },
-  data: () => {{
-    drawer: null
-  }}
-}
+  data: () => ({
+    drawer: false
+  })
+};
 </script>
 
-<style>
+<style lang="scss">
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
 
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
 </style>
