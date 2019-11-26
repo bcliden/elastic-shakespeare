@@ -44,11 +44,11 @@ public class SpeakerResource {
         }
 		
 		SearchResponse res = client.prepareSearch("shakespeare").setSize(0).setQuery(QueryBuilders.matchAllQuery())
-				.addAggregation(AggregationBuilders.terms("speakers").field("speaker").size(10)).get();
+				.addAggregation(AggregationBuilders.terms("speakers").field("speaker").size(100)).get();
 
 		Terms speakers = res.getAggregations().get("speakers");
-//		
-		List<Map<String, Object>> mapped = speakers.getBuckets().stream().map((Terms.Bucket b) -> {
+		
+		List<Map<String, ?>> mapped = speakers.getBuckets().stream().map((Terms.Bucket b) -> {
 			Map<String, Object> map = new HashMap<>();
 			map.put("speaker", b.getKeyAsString());
 			map.put("lines", b.getDocCount());
@@ -56,7 +56,6 @@ public class SpeakerResource {
 		}).collect(Collectors.toList());
 		
 		return Response.ok().entity(mapped).build();
-
 	}
 	
 	@GET
@@ -72,12 +71,13 @@ public class SpeakerResource {
         }
         
         SearchResponse res = client.prepareSearch("shakespeare")
-        		.setQuery(QueryBuilders.matchQuery("speaker", name.toUpperCase()))
+        		.setSize(2000)
+        		.setQuery(QueryBuilders.matchQuery("speaker", name.toUpperCase())) // REMOVE THIS UPPERCASE ONCE DB IS LOWERCASE
         		.get();
         
         List<SearchHit> hits = Arrays.asList(res.getHits().getHits());
         		
-        List<Map> resHits = hits.stream()
+        List<Map<String, Object>> resHits = hits.stream()
         		.map(h -> h.getSourceAsMap())
         		.collect(Collectors.toList());
 		

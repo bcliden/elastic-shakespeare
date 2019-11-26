@@ -27,4 +27,4 @@ public class ContextListener implements ServletContextListener {
 		es.releaseClient();
 	}
 
-}
+};
