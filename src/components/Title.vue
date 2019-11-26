@@ -1,9 +1,9 @@
 <template>
-  <v-row>
-    <h1 class="inline display-3">
+  <v-row class="ma-3">
+    <h1 class="inline display-3 mr-3">
       <slot></slot>
     </h1>
-    <small class="subtitle-1">
+    <small class="subtitle-1 align-self-end">
       <slot name="subtitle"></slot>
     </small>
   </v-row>

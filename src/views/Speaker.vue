@@ -1,30 +1,32 @@
 <template>
   <v-container>
     <v-row>
-      <Title>{{ this.$route.params.name }}</Title>
+      <Title>{{ formatted(this.$route.params.name) }}</Title>
     </v-row>
     <v-row>
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Play</th>
-              <th class="text-left">Line No.</th>
-              <th class="text-left">Text</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in lines" :key="item.line_id">
-              <td>{{ item.play_name }}</td>
-              <td>{{ item.line_number }}</td>
-              <td>{{ item.text_entry }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+      <v-card width="100%">
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-card-title>
+        <v-data-table
+          :headers="headers"
+          :items="lines"
+          :search="search"
+          :loading="loading"
+        ></v-data-table>
+      </v-card>
     </v-row>
   </v-container>
 </template>
+
+
 
 <script>
 import axios from "axios";
@@ -32,15 +34,48 @@ import Title from "../components/Title.vue";
 
 export default {
   data: () => ({
-    lines: null
+    lines: [],
+    loading: true,
+    search: "",
+    headers: [
+      { text: "line_number", value: "line_number" },
+      { text: "play_name", value: "play_name" },
+      { text: "text", value: "text_entry", width: "80%" }
+    ]
   }),
+  methods: {
+    formatted: function(name) {
+      let newName = name
+        .toLowerCase()
+        .split(" ")
+        .map(word => {
+          let capWord = [...word];
+          capWord[0] = capWord[0].toUpperCase();
+          return capWord.join("");
+        })
+        .join(" ");
+      return newName;
+    },
+    init(name) {
+      this.loading = true;
+      axios
+        .get(`http://localhost:8080/api/speakers/${name}`)
+        .then(({ data }) => {
+          this.loading = false;
+          this.lines = data;
+        })
+        .catch(err => {
+          this.loading = false;
+          console.error(err);
+        });
+    }
+  },
   created() {
-    axios
-      .get(`http://localhost:8080/api/speakers/${this.$route.params.name}`)
-      .then(({ data }) => {
-        this.lines = data;
-      })
-      .catch(console.error);
+    this.init(this.$route.params.name);
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.init(to.params.name);
+    next();
   },
   components: {
     Title

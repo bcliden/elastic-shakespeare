@@ -32,7 +32,7 @@ export default {
             return new Number(number).toLocaleString();
         },
         getUrl(speaker){
-            return `speakers/${speaker}`;
+            return `speakers/${speaker.toLowerCase()}`;
         }
     },
     created() {
