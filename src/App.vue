@@ -37,9 +37,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="indigo" dark>
+    <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Shake-sploration</v-toolbar-title>
     </v-app-bar>
 
     <v-content>
@@ -57,7 +57,7 @@
       </v-scroll-x-transition>
     </v-container> -->
 
-    <v-footer color="indigo" app>
+    <v-footer color="primary" app>
       <span class="white--text">&copy; 2019</span>
     </v-footer>
   </v-app>

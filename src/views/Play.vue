@@ -3,7 +3,7 @@
     <v-row>
       <Title>
         {{ formatted(this.$route.params.name) }}
-        <template v-slot:subtitle>person</template>
+        <template v-slot:subtitle>play</template>
       </Title>
     </v-row>
     <v-row>
@@ -18,12 +18,7 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table
-          :headers="headers"
-          :items="lines"
-          :search="search"
-          :loading="loading"
-        ></v-data-table>
+        <v-data-table :headers="headers" :items="lines" :search="search" :loading="loading"></v-data-table>
       </v-card>
     </v-row>
   </v-container>
@@ -42,7 +37,7 @@ export default {
     search: "",
     headers: [
       { text: "line_number", value: "line_number", width: "10%" },
-      { text: "play_name", value: "play_name", width: "15%" },
+      { text: "speaker", value: "speaker", width: "15%" },
       { text: "text", value: "text_entry" }
     ]
   }),
@@ -62,7 +57,7 @@ export default {
     init(name) {
       this.loading = true;
       axios
-        .get(`http://localhost:8080/api/speakers/${name}`)
+        .get(`http://localhost:8080/api/plays/${name}`)
         .then(({ data }) => {
           this.loading = false;
           this.lines = data;

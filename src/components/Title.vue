@@ -1,6 +1,6 @@
 <template>
   <v-row class="ma-3">
-    <h1 class="inline display-3 mr-3">
+    <h1 class="inline display-3 mr-5">
       <slot></slot>
     </h1>
     <small class="subtitle-1 align-self-end">

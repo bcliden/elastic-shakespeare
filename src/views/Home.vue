@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
       <Title>
         Home
         <template v-slot:subtitle>Your Shakespeare API</template>
