@@ -18,13 +18,15 @@
             hide-details
           ></v-text-field>
         </v-card-title>
-        <v-data-table :headers="headers" :items="lines" :search="search" :loading="loading"></v-data-table>
+        <v-data-table :headers="headers" :items="lines" :search="search" :loading="loading">
+          <template v-slot:item.speaker="{ item }">
+            <router-link :to="getSpeakerURL(item.speaker)">{{ item.speaker }}</router-link>
+          </template>
+        </v-data-table>
       </v-card>
     </v-row>
   </v-container>
 </template>
-
-
 
 <script>
 import axios from "axios";
@@ -47,6 +49,12 @@ export default {
         .toLowerCase()
         .split(" ")
         .map(word => {
+          if (word == "iv" || word == "vi" || word == "viii" || word == "ii" || word == "iii") {
+            return word.slice(0).toUpperCase();
+          }
+          return word;
+        })
+        .map(word => {
           let capWord = [...word];
           capWord[0] = capWord[0].toUpperCase();
           return capWord.join("");
@@ -66,6 +74,9 @@ export default {
           this.loading = false;
           console.error(err);
         });
+    },
+    getSpeakerURL(name) {
+      return `/speakers/${name.toLowerCase()}`;
     }
   },
   created() {
