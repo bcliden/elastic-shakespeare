@@ -44,7 +44,7 @@ public class SpeakerResource {
         }
 		
 		SearchResponse res = client.prepareSearch("shakespeare").setSize(0).setQuery(QueryBuilders.matchAllQuery())
-				.addAggregation(AggregationBuilders.terms("speakers").field("speaker").size(100)).get();
+				.addAggregation(AggregationBuilders.terms("speakers").field("speaker.keyword").size(100)).get();
 
 		Terms speakers = res.getAggregations().get("speakers");
 		
@@ -72,7 +72,7 @@ public class SpeakerResource {
         
         SearchResponse res = client.prepareSearch("shakespeare")
         		.setSize(2000)
-        		.setQuery(QueryBuilders.matchQuery("speaker", name.toUpperCase())) // REMOVE THIS UPPERCASE ONCE DB IS LOWERCASE
+        		.setQuery(QueryBuilders.matchQuery("speaker", name))
         		.get();
         
         List<SearchHit> hits = Arrays.asList(res.getHits().getHits());

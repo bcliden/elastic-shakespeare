@@ -46,10 +46,10 @@ public class PlayResource {
 				.setSize(0)
 				.addAggregation(
 						AggregationBuilders.terms("plays")
-							.field("play_name")
+							.field("play_name.keyword")
 							.size(36)
 							.subAggregation(AggregationBuilders.terms("speakers")
-									.field("speaker")
+									.field("speaker.keyword")
 									.size(500)
 							)
 				)
