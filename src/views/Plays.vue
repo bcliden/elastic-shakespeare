@@ -49,7 +49,7 @@ export default {
   created() {
     this.loading = true;
     axios
-      .get("http://localhost:8080/api/plays")
+      .get("plays")
       .then(({ data }) => {
         this.loading = false;
         this.plays = data;

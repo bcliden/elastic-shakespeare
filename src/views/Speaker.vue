@@ -71,7 +71,7 @@ export default {
     init(name) {
       this.loading = true;
       axios
-        .get(`http://localhost:8080/api/speakers/${name}`)
+        .get(`speakers/${name}`)
         .then(({ data }) => {
           this.loading = false;
           this.lines = data;

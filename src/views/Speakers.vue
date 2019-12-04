@@ -83,7 +83,7 @@ export default {
   created() {
     this.loading = true;
     axios
-      .get("http://localhost:8080/api/speakers")
+      .get("speakers")
       .then(({ data }) => {
         this.loading = false;
         this.speakers = data;

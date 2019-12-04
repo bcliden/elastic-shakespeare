@@ -65,7 +65,7 @@ export default {
     init(name) {
       this.loading = true;
       axios
-        .get(`http://localhost:8080/api/plays/${name}`)
+        .get(`plays/${name}`)
         .then(({ data }) => {
           this.loading = false;
           this.lines = data;
