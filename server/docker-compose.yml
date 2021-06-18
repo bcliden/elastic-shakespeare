@@ -1,0 +1,22 @@
+version: '3'
+services:
+   web:
+      build: .
+      ports:
+      - 80:8080
+      links:
+      - elasticsearch
+      networks:
+      - app
+   elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+      volumes:
+      - C:\elasticsearch-6.4.3\data:/usr/share/elasticsearch/data
+      expose:
+      - 9200
+      - 9300
+      networks:
+      - app
+networks:
+   app:
+      driver: bridge
